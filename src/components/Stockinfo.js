@@ -13,6 +13,18 @@ function StockInfo({
     <div>
       <h2>{ symbol }: { companyName }</h2>
       <h3>{ latestPrice}</h3>
+      <dl>
+
+        <dt>Week 52 High</dt>
+        <dd>{ week52High }</dd>
+
+        <dt>Week 52 Low</dt>
+        <dd>{ week52Low }</dd>
+
+        <dt>Primary Exchange</dt>
+        <dd>{ primaryExchange }</dd>
+
+      </dl>
     </div>
   )
 }
