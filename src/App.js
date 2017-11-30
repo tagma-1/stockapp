@@ -13,17 +13,7 @@ class App extends Component {
   };
   
   componentDidMount() {
-    fetchStockQuote(this.state.enteredSymbol)
-      .then((quote) => {
-        this.setState({ quote: quote });
-      })
-      .catch((error) => {
-        if (error.response.status === 404) {
-          error = new Error('The stock symbol does not exist.')
-        } 
-        this.setState({ error: error });
-        console.log('Error loading quote', error);
-      })
+    this.loadQuote();
   };
 
   onChangeEnteredSymbol = ({ target }) => {
@@ -32,6 +22,21 @@ class App extends Component {
       enteredSymbol: value 
     })
   }
+
+  loadQuote = () => {
+    const { enteredSymbol } = this.state;
+    fetchStockQuote(this.state.enteredSymbol)
+      .then((quote) => {
+        this.setState({ quote: quote });
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          error = new Error(`The stock symbol '${enteredSymbol}' does not exist.`)
+        } 
+        this.setState({ error: error });
+        console.log('Error loading quote', error);
+      })
+  };
 
   render() {
     const { error, enteredSymbol, quote } = this.state; 
@@ -48,6 +53,13 @@ class App extends Component {
             this.onChangeEnteredSymbol(event);
           } } 
         />
+        <button 
+          onClick={ (event) => {
+            this.loadQuote();
+          } }
+        >
+          Load Quote 
+        </button>
         {
           !!error &&
             <p>{ error.message }</p>
