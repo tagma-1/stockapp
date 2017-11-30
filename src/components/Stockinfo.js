@@ -7,24 +7,37 @@ function StockInfo({
   latestPrice, // 188.15
   latestSource, // Close
   week52High, // 204.38
-  week52Low // 113.95
+  week52Low, // 113.95
+  logo,
+  news
 }) {
   return (
     <div>
-      <h2>{ symbol }: { companyName }</h2>
-      <h3>{ latestPrice}</h3>
-      <dl>
+      <h2><strong>{ symbol }: { companyName }</strong></h2>
+      <br />
+      <img src={ logo } />
+      <h3><strong>Latest Price: </strong>${ latestPrice }</h3>
+      <br />
+      <div className="row col-md-10">
+        <dl className="col-md-4">
 
-        <dt>Week 52 High</dt>
-        <dd>{ week52High }</dd>
+          <dt>Week 52 High:</dt>
+          <dd>${ week52High }</dd>
 
-        <dt>Week 52 Low</dt>
-        <dd>{ week52Low }</dd>
+          <dt>Week 52 Low:</dt>
+          <dd>${ week52Low }</dd>
 
-        <dt>Primary Exchange</dt>
-        <dd>{ primaryExchange }</dd>
+          <dt>Primary Exchange:</dt>
+          <dd>{ primaryExchange }</dd>
 
-      </dl>
+        </dl>
+        <ul className="col-md-8">
+          { news.map((story) => {
+            return <li id="news"><a href={story.url}>{story.headline} </a><small>({story.source})</small></li>
+          })}
+        </ul>
+      </div>
+      
     </div>
   )
 }

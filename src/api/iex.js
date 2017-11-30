@@ -9,3 +9,13 @@ export function fetchStockQuote(symbol) {
     .then((res) => res.data)
 }
 
+export function fetchStockLogo(symbol) {
+  return api.get(`/stock/${symbol}/logo`)
+    .then((res) => res.data)
+}
+
+export function fetchStockNews(symbol) {
+  return api.get(`/stock/${symbol}/news/last/4`)
+    .then((res) => res.data)
+}
+

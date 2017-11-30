@@ -1,5 +1,6 @@
 html {
   font-size: 20px;  
+  text-align: center;
 }
 
 body {
@@ -18,4 +19,25 @@ button {
   background: #222;
   border: none;
   margin-left: 1rem;
+}
+
+.header1 {
+  color: white;
+  background: black;
+}
+
+.header1 img {
+  max-height: 50px;
+}
+
+.header1 h4 {
+  margin-top: 0.15em;
+}
+
+img {
+  margin-bottom: 2rem;
+}
+
+#news {
+  text-align: left;
 }
