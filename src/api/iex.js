@@ -19,3 +19,8 @@ export function fetchStockNews(symbol) {
     .then((res) => res.data)
 }
 
+export function fetchPreviousMonth(symbol) {
+  return api.get(`/stock/${symbol}/chart/1m`)
+    .then((res) => res.data)
+}
+

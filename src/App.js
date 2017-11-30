@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Logo from './logo.svg';
 import './App.css';
 import StockInfo from './components/Stockinfo'
-import { fetchStockQuote, fetchStockLogo, fetchStockNews } from './api/iex'
+import { fetchStockQuote, fetchStockLogo, fetchStockNews, fetchPreviousMonth } from './api/iex'
 import './bootstrap-4.0.0-beta.2-dist/css/bootstrap.css'
 
 
@@ -13,6 +13,7 @@ class App extends Component {
     quote: null,
     logo: null,
     news: null,
+    priceHistory: null,
     quoteHistory: []
   };
   
@@ -28,7 +29,7 @@ class App extends Component {
   }
 
   loadQuote = () => {
-    const { enteredSymbol, quoteHistory, news } = this.state;
+    const { enteredSymbol, quoteHistory, news, priceHistory } = this.state;
 
     // Fetch the stock quote
     fetchStockQuote(enteredSymbol)
@@ -73,17 +74,30 @@ class App extends Component {
           this.setState({ error: error });
           console.log('Error loading logo', error);
         })
+
+        // Fetch the previous month's trading data
+        fetchPreviousMonth(enteredSymbol)
+          .then((prices) => {
+            this.setState({ priceHistory: prices });
+          })
+          .catch((error) => {
+            if (error.response.status === 404) {
+              error = new Error(`The stock symbol '${enteredSymbol}' does not have historic price data available.`)
+            } 
+            this.setState({ error: error });
+            console.log('Error loading logo', error);
+          })        
   };
 
   render() {
-    const { error, enteredSymbol, quote, logo, quoteHistory, news } = this.state; 
+    const { error, enteredSymbol, quote, logo, quoteHistory, news, priceHistory } = this.state; 
 
     return (
       <div className="App">
-        <div className="header1 row">
+        {/* <div className="header1 row">
           <h4 className="offset-5">Built with</h4>
-          <img src={Logo} alt="react logo" />
-        </div>
+          <img src={Logo} className="App-logo" alt="react logo" />
+        </div> */}
         <br />
         <div className="container" align="center">
           <br />
@@ -114,11 +128,12 @@ class App extends Component {
               <p>{ error.message }</p>
           } 
           {
-            !!quote && !!news && !!logo ? (
+            !!quote && !!news && !!logo && !!priceHistory ? (
               <StockInfo
                 { ...quote }
                 logo={ logo }
                 news={ news }
+                priceHistory={ priceHistory }
               />
             ) : (
               <p>Loading...</p>

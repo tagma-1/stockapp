@@ -9,7 +9,8 @@ function StockInfo({
   week52High, // 204.38
   week52Low, // 113.95
   logo,
-  news
+  news,
+  priceHistory
 }) {
   return (
     <div>
@@ -21,10 +22,10 @@ function StockInfo({
       <div className="row col-md-10">
         <dl className="col-md-4">
 
-          <dt>Week 52 High:</dt>
+          <dt>52 Week High:</dt>
           <dd>${ week52High }</dd>
 
-          <dt>Week 52 Low:</dt>
+          <dt>52 Week Low:</dt>
           <dd>${ week52Low }</dd>
 
           <dt>Primary Exchange:</dt>
@@ -37,6 +38,31 @@ function StockInfo({
           })}
         </ul>
       </div>
+      <br />
+      <h3>Price History Chart</h3>
+      <br />
+      <table className="table table-striped table-sm text-center">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Average</th>
+          </tr> 
+        </thead>
+        <tbody>
+          { priceHistory.map((day) => {
+              return(
+                <tr>
+                  <td>{ day.date }</td>
+                  <td>${ day.open }</td>
+                  <td>${ day.close }</td>
+                  <td>${ day.high }</td>
+                </tr>
+              )
+            })}
+        </tbody>
+      </table>
       
     </div>
   )
