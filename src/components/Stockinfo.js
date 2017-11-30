@@ -1,4 +1,5 @@
 import React from 'react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 
 function StockInfo({
   symbol, // i.e. NFLX
@@ -10,7 +11,8 @@ function StockInfo({
   week52Low, // 113.95
   logo,
   news,
-  priceHistory
+  priceHistory,
+  sixMonthHistory
 }) {
   return (
     <div>
@@ -39,15 +41,28 @@ function StockInfo({
         </ul>
       </div>
       <br />
-      <h3>Price History Chart</h3>
+      <h3>Price History Chart (6 Months)</h3>
+      <br />
+      <LineChart width={912.5} height={312.5} data={ sixMonthHistory }
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis dataKey="close" />
+        <Tooltip />
+        <Legend />
+        {/* <Line type="monotone" dataKey="close" stroke="#8884d8" /> */}
+        <Line type="monotone" dataKey="close" stroke="#82ca9d" dot={false} />
+      </LineChart>
+      <br />
+      <h3>Price History Table (1 Month)</h3>
       <br />
       <table className="table table-striped table-sm text-center">
         <thead>
           <tr>
             <th>Date</th>
+            <th>Open</th>
+            <th>Close</th>
             <th>High</th>
-            <th>Low</th>
-            <th>Average</th>
           </tr> 
         </thead>
         <tbody>

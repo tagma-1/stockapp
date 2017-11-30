@@ -24,3 +24,8 @@ export function fetchPreviousMonth(symbol) {
     .then((res) => res.data)
 }
 
+export function fetchSixMonths(symbol) {
+  return api.get(`/stock/${symbol}/chart/6m`)
+    .then((res) => res.data)
+}
+

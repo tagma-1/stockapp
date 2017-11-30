@@ -40,3 +40,9 @@ img {
 #news {
   text-align: left;
 }
+
+.text-link {
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+}
+
