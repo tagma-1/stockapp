@@ -8,11 +8,12 @@ import { fetchStockQuote } from './api/iex'
 class App extends Component {
   state={
     error: null,
+    enteredSymbol: 'NFLX',
     quote: null
   };
   
   componentDidMount() {
-    fetchStockQuote('n123')
+    fetchStockQuote(this.state.enteredSymbol)
       .then((quote) => {
         this.setState({ quote: quote });
       })
@@ -25,12 +26,28 @@ class App extends Component {
       })
   };
 
+  onChangeEnteredSymbol = ({ target }) => {
+    const value = target.value.trim().toUpperCase()
+    this.setState({ 
+      enteredSymbol: value 
+    })
+  }
+
   render() {
-    const { error, quote } = this.state; 
+    const { error, enteredSymbol, quote } = this.state; 
 
     return (
       <div className="App">
         <h1>Stock Price App</h1>
+
+        <input 
+          value={ enteredSymbol } 
+          placeholder='Stock symbol e.g. NFLX' 
+          aria-label='Stock symbol'
+          onChange={ (event) => {
+            this.onChangeEnteredSymbol(event);
+          } } 
+        />
         {
           !!error &&
             <p>{ error.message }</p>
